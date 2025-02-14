@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addHabit, getHabits } from "../firebase"; 
+import { addHabit, getHabits, toggleHabitCompletion, deleteHabit } from "../firebase";
 
 const HabitList = () => {
   const [habits, setHabits] = useState([]);
@@ -16,6 +16,16 @@ const HabitList = () => {
       setNewHabit(""); // Clear input
       fetchHabits(); // Refresh the habit list
     }
+  };
+
+  const handleToggleCompletion = async (habitId, completed) => {
+    await toggleHabitCompletion(habitId, completed);
+    fetchHabits(); // Refresh the habit list
+  };
+
+  const handleDeleteHabit = async (habitId) => {
+    await deleteHabit(habitId);
+    fetchHabits(); // Refresh the habit list
   };
 
   useEffect(() => {
@@ -37,6 +47,10 @@ const HabitList = () => {
         {habits.map((habit) => (
           <li key={habit.id}>
             {habit.habit} - {habit.completed ? "Completed" : "Not Completed"}
+            <button onClick={() => handleToggleCompletion(habit.id, habit.completed)}>
+              Mark as {habit.completed ? "Incomplete" : "Completed"}
+            </button>
+            <button onClick={() => handleDeleteHabit(habit.id)}>Delete</button>
           </li>
         ))}
       </ul>

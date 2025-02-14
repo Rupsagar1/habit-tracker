@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -44,6 +44,30 @@ export const getHabits = async () => {
   } catch (e) {
     console.error("Error fetching habits: ", e);
     return [];
+  }
+};
+
+// Function to update the completion status of a habit
+export const toggleHabitCompletion = async (habitId, completed) => {
+  const habitRef = doc(db, "habits", habitId);
+  try {
+    await updateDoc(habitRef, {
+      completed: !completed,
+    });
+    console.log("Habit completion updated!");
+  } catch (e) {
+    console.error("Error updating document: ", e);
+  }
+};
+
+// Function to delete a habit from Firestore
+export const deleteHabit = async (habitId) => {
+  const habitRef = doc(db, "habits", habitId);
+  try {
+    await deleteDoc(habitRef);
+    console.log("Habit deleted!");
+  } catch (e) {
+    console.error("Error deleting document: ", e);
   }
 };
 
