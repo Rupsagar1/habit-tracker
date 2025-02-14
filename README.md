@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 # habit-tracker
 
 This is a habit-tracker application built with React and Vite.
 
 ## React + Vite
+=======
+# React + Vite
+>>>>>>> 41021b3ad8ed97f7ebc9df115062c3ec6610cc13
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
